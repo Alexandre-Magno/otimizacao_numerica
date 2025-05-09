@@ -1,5 +1,13 @@
 from scipy.optimize import linprog
 
+import sys
+import os
+
+# Adiciona o diretório raiz ao PYTHONPATH
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+from utils import status_messages
+
+
 # Coeficientes da função objetivo (negativos para maximização)
 c = [5, -3, -8]
 
@@ -19,3 +27,4 @@ res = linprog(
 
 print("Solução ótima:", res.x)
 print("Valor ótimo:", -res.fun)
+print("Status:", status_messages[res.status])

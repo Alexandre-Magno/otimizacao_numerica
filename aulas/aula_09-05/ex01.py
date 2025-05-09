@@ -1,4 +1,10 @@
 from scipy.optimize import linprog
+import sys
+import os
+
+# Adiciona o diretório raiz ao PYTHONPATH
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+from utils import status_messages
 
 # função custo
 c = [7, 4, -15]
@@ -20,3 +26,4 @@ res = linprog(
 
 print("Solução ótima:", res.x)
 print("Valor ótimo:", -res.fun)
+print("Status:", status_messages[res.status])
