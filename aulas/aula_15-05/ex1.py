@@ -1,4 +1,5 @@
 from scipy.optimize import linprog
+
 import sys
 import os
 
@@ -6,23 +7,27 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 from utils import status_messages
 
-# função custo
-c = [7, 4, -15]
 
+# Coeficientes da função objetivo (negativos para maximização)
+# Max Z = 3x1 − 5x2
+c = [-3, 5]
 
-# variaveis restrições
-A = [[1 / 3, -32 / 9, 20 / 9], [1 / 6, -13 / 9, 5 / 18], [-2 / 3, 16 / 9, -1 / 9]]
+# Coeficientes das restrições (lado esquerdo)
+# x1 ≤ 4
+# 2x2 ≤ 12
+# 3x1 + 2x2 ≥ 18
 
-# lado direito das restrições
-b = [1, 2, 3]
+A = [[1, 0], [0, 2], [-3, -2]]
+
+# Lado direito das restrições
+b = [4, 12, -18]
 
 # Restrições de não negatividade são padrão em linprog
 res = linprog(
     c,
     A_ub=A,
     b_ub=b,
-    method="simplex",
-    options={"disp": True},
+    method="highs",
 )
 
 print("Solução ótima:", res.x)
